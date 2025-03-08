@@ -28,7 +28,9 @@ Add phoneNumber varchar(15);
 -- Select is used to select data from a database
 select * from empData;
 
-
+-- Rename column name
+Alter Table empData
+Rename Column phoneNumber to email;
 
 
 
