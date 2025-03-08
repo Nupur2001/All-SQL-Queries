@@ -32,7 +32,12 @@ select * from empData;
 Alter Table empData
 Rename Column phoneNumber to email;
 
+-- Change Datatype
+Alter table empData
+Modify column email varchar(100);
 
+-- Select is used to select data from a database
+Select * from empData;
 
 
 
