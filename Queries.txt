@@ -25,6 +25,9 @@ select * from empData;
 Alter Table empData
 Add phoneNumber varchar(15);
 
+Alter Table empData
+Add empID int;
+
 -- Select is used to select data from a database
 select * from empData;
 
@@ -55,4 +58,41 @@ first;
 -- Select is used to select data from a database
 Select * from empData;
 
+-- To delete a column
+Alter Table empData
+Drop Column email;
 
+Alter Table empData
+drop column empID;
+
+-- Select is used to select data from a database
+Select * from empData;
+
+-- Insert Values
+Insert Into empData 
+values(
+1, "Eugene","Krabs","100.20","2001-01-20"
+);
+
+-- Insert Multiple Values
+Insert Into empData
+values
+	(2,"Spongebox","Squarepants",70.22,"2001-03-10"),
+	(3,"Sqidward","Tentacles",80.30,"2001-03-01"),
+	(2,"Spongebox","Squarepants",70.22,"2001-03-10"),
+	(2,"Patrick","Star",69.22,"2001-03-30");
+
+-- Delete Values
+Truncate Table empData;
+
+-- Insert Multiple Values
+Insert Into empData
+values
+	(1, "Eugene","Krabs","100.20","2001-01-20"),
+	(2,"Spongebox","Squarepants",70.22,"2001-03-10"),
+	(3,"Sqidward","Tentacles",80.30,"2001-03-01"),
+	(4,"Sandy","Astronaut",70.22,"2001-03-10"),
+	(5,"Patrick","Star",69.22,"2001-03-30");
+
+
+ 
