@@ -1,7 +1,9 @@
 -- Creating Database employees 
 CREATE DATABASE employees;
+
 -- Use this database to perform the database operations.
 USE employees;
+
 -- Creating Table
 CREATE TABLE empData(
 -- columnName datatype, 
@@ -11,14 +13,18 @@ lastName varchar(50),
 hourlyPay decimal(5,2),
 hireDate Date
 );
+
 -- Rename Table 
 Rename Table empData to empRecord;
 Rename Table empRecord to empData;
+
 -- Select is used to select data from a database
 select * from empData;
+
 -- Add new column
 Alter Table empData
 Add phoneNumber varchar(15);
+
 -- Select is used to select data from a database
 select * from empData;
 
