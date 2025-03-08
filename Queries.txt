@@ -93,6 +93,18 @@ values
 	(3,"Sqidward","Tentacles",80.30,"2001-03-01"),
 	(4,"Sandy","Astronaut",70.22,"2001-03-10"),
 	(5,"Patrick","Star",69.22,"2001-03-30");
+    
+-- Insert value to specific records
+Insert Into empData (employeesID,firstName,lastName)
+Values 
+(6, "Sheldon","Plankton");
 
+-- Select specific records from the table
+select firstName,lastName from empData;
 
- 
+-- Where clause is used to filter records. It is used to extract only those records that fulfill a specified condition.
+select * from empData where employeesID=1;
+select * from empData where firstName="Sandy";
+select * from empData where hourlyPay> 70;
+select * from empData where hourlyPay> 70.55;
+select * from empData where hireDate< "2001-03-30";
