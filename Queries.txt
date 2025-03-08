@@ -108,3 +108,16 @@ select * from empData where firstName="Sandy";
 select * from empData where hourlyPay> 70;
 select * from empData where hourlyPay> 70.55;
 select * from empData where hireDate< "2001-03-30";
+
+-- Comparison Operator
+-- SQL Not Equal comparison operator (!=)
+select * from empData where employeesID!=1;
+select * from empData where employeesID>1;
+select * from empData where employeesID=1;
+select * from empData where employeesID>2;
+
+-- To find which record is having null value
+-- Don't use =NULL...use IS NULL
+select * from 
+empData 
+where hourlyPay Is Null;
