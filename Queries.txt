@@ -263,3 +263,30 @@ Values
 -- Dropping check constraint
 alter table empData
 drop check hourlyPayCheck;
+
+create table testDefault(
+pID int,
+pName varchar(50),
+pPrice decimal(4,2) default 0
+);
+
+-- To add constraint to the table after created
+alter table testDefault
+alter price set default 0;
+
+insert into testDefault 
+values
+(1,"Coat",16.2),
+(2,"T-shirt",30.22),
+(3,"Korean Pant",30.75);
+
+insert into testDefault (pID,pName)
+values
+(4,"Jacket"),
+(5,"Shirt"),
+(6,"Japenese Pant");
+
+select * from testDefault;
+
+
+
