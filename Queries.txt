@@ -233,4 +233,33 @@ productName varchar(50) unique,
 productPrice decimal(5,2) not null
 );
 
+-- If forget to add NOT NULL constraint 
+alter table test
+modify productID int not null;
 
+select * from test;
+
+insert into test 
+values( null,"Mexican Pan", null);
+
+-- Check Constraint
+create table checkTest(
+employeesID INT,
+firstName varchar(50),
+lastName varchar(50),
+hourlyPay decimal(5,2),
+constraint hourlyPayCheck Check(hourlyPay>=10.00),
+hireDate Date
+);
+
+-- If forget to add check constraint
+alter table empData
+add constraint hourlyPayCheck Check(hourlyPay>=10.00);
+
+Insert Into empData (employeesID,firstName,lastName,hourlyPay,hireDate)
+Values 
+(6, "Sheldon","Plankton",5.00,"2001-03-10");
+
+-- Dropping check constraint
+alter table empData
+drop check hourlyPayCheck;
