@@ -206,5 +206,31 @@ null,
 null
 );
 
+create table products(
+productID int,
+-- The UNIQUE statement eliminates the possibility of duplicate records in a specific column.
+productName varchar(50) unique,
+productPrice decimal(5,2)
+);
+
+-- If forget to add UNIQUE constraint 
+alter table products 
+add constraint
+unique(productID);
+
+-- Inserting Values to products table
+insert into products 
+values
+(1,"Coat",100.2),
+(2,"T-shirt",30.22),
+(3,"Korean Pant",30.75);
+
+
+create table test(
+productID int,
+productName varchar(50) unique,
+-- constraint enforces a column to NOT accept NULL values.
+productPrice decimal(5,2) not null
+);
 
 
