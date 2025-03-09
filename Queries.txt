@@ -133,14 +133,78 @@ where employeesID="6";
 -- Encountered this error -> Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column.  To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.
 set SQL_SAFE_UPDATES=0;
 
+-- If want to update any value to NULL
+update empData
+set hireDate= NULL
+where lastName="Plankton";
 
+select * from empData;
 
+-- To update all of the rows within a column
+update empData
+set hourlyPay= 10.55;
 
+-- Delete a row from table
+delete from empData
+where lastName="Plankton";
 
+-- Autocommit, commit, and rollback are used in databases to manage transactions. 
+/*
+Autocommit 
+The default mode for new connections
+Automatically executes a COMMIT statement after each statement sent to the database server
 
+Commit 
+Makes changes made in the current transaction permanent and visible to other sessions
+Releases all InnoDB locks set during the current transaction
 
+Rollback 
+Cancels all modifications made by the current transaction
+Releases all InnoDB locks set during the current transaction
+*/
 
+delete from empData;
+-- Inserted values again
+ 
+set autocommit=off;
+-- Will save the last change 
+commit;
+delete from empData;
+rollback;
 
+select * from empData;
+
+-- Current Date & Time
+create table test(
+myDate Date,
+myTime Time,
+myDateTime datetime
+);
+
+Insert Into test
+values(
+current_date(),
+current_time(),
+now()
+);
+
+select * from test;
+
+Insert Into test
+values(
+current_date()-1,
+null,
+null
+);
+
+drop table test;
+
+Insert Into test
+values(
+current_date()+1,
+null,
+null
+);
 
 
 
