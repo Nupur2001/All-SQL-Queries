@@ -121,3 +121,26 @@ select * from empData where employeesID>2;
 select * from 
 empData 
 where hourlyPay Is Null;
+
+
+USE employees;
+-- To update values/ multiple values
+update empData
+set hourlyPay =10.99,
+hireDate="2001-01-20"
+where employeesID="6";
+
+-- Encountered this error -> Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column.  To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.
+set SQL_SAFE_UPDATES=0;
+
+
+
+
+
+
+
+
+
+
+
+
