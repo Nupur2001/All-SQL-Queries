@@ -353,3 +353,62 @@ drop foreign key transaction_ibfk_1;
 alter table transaction
 add constraint fk_cutomer_id
 foreign key(cID) references customers(cID);
+
+
+create table customers(
+cID int primary key auto_increment,
+customerFirstName varchar(50),
+customerLastName varchar(50)
+);
+select * from customers;
+
+insert into customers(customerFirstName,customerLastName)
+values
+("Larry","Fish"),
+("Sandy","Monkey"),
+("Patrick","Starfish");
+
+-- Foreign Key constraint is used to prevent actions that would destroy links between tables
+-- A FOREIGN KEY is a field (or collection of fields) in one table, that refers to the PRIMARY KEY in another table.The table with the foreign key is called the child table, and the table with the primary key is called the referenced or parent table.
+create table transactions(
+tID int primary key auto_increment,
+tAmount decimal(5,2),
+cID int,
+foreign key (cID)REFERENCES customers(cID)
+);
+alter table transactions
+auto_increment=1000;
+
+insert into transactions(tAmount,cID)
+values
+(4.55,3),
+(7.23,2),
+(7.23,1),
+(1.25,3);
+
+select * from transactions;
+
+delete from customers 
+where cID=3;
+
+insert into transactions(tAmount,cID)
+values
+(1.00,NULL);
+
+insert into customers(customerFirstName,customerLastName)
+values
+("Poppy","Puff");
+
+-- JOINS -> used to combine rows from two or more tables
+select * from transactions inner join customers
+on transactions.cID = customers.cID;
+
+-- The INNER JOIN keyword selects records that have matching values in both tables.
+select tID,customerFirstName,customerLastName,tAmount from transactions inner join customers
+on transactions.cID=customers.cID;
+
+-- The LEFT JOIN keyword returns all records from the left table (table1), and the matching records from the right table (table2). The result is 0 records from the right side, if there is no match.
+select * from transactions left join customers on transactions.cID=customers.cID;
+
+-- The RIGHT JOIN keyword returns all records from the right table (table2), and the matching records from the left table (table1). The result is 0 records from the left side, if there is no match.
+select * from transactions right join customers on transactions.cID=customers.cID;
