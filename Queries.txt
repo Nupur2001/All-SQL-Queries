@@ -323,40 +323,6 @@ AUTO_INCREMENT=1000;
 
 create table customers(
 cID int primary key auto_increment,
-firstName varchar(50),
-lastName varchar(50)
-);
-
--- drop table customers;
-insert into customers(firstName,lastName)
-values
-("Larry","Fish"),
-("Fred","Lobster"),
-("Bubble","Bass");
-
-select * from customers;
-
--- drop table transaction;
-
-create table transaction(
-tID int primary key auto_increment,
-amount decimal(5,2),
-cID int,
-foreign key(cID) references customers(cID));
-
--- Drop foreign key
--- transaction_ibfk_1 -> Schemas->Choose specific table in which foreign key is added-> foreign key-> copy the code
-alter table transaction
-drop foreign key transaction_ibfk_1;
-
--- Add unique name to the foreign key
-alter table transaction
-add constraint fk_cutomer_id
-foreign key(cID) references customers(cID);
-
-
-create table customers(
-cID int primary key auto_increment,
 customerFirstName varchar(50),
 customerLastName varchar(50)
 );
@@ -412,3 +378,81 @@ select * from transactions left join customers on transactions.cID=customers.cID
 
 -- The RIGHT JOIN keyword returns all records from the right table (table2), and the matching records from the left table (table1). The result is 0 records from the left side, if there is no match.
 select * from transactions right join customers on transactions.cID=customers.cID;
+
+-- Functions -> built-in programs that are used to perform different operations on the database.
+
+select count(tAmount) as countAmount from transactions;
+
+select concat(customerFirstName," ",customerLastName) as fullName from customers;
+
+create table empRecords(
+eID int primary key auto_increment,
+eName varchar(50),
+hourlyPay decimal(5,2),
+hireDate date);
+
+insert into empRecords(eName,hourlyPay,hireDate) values
+("Eugene Krab",33.55,"2025-01-15"),
+("Squidbud Tentacles",31.50,"2025-01-16"),
+("Spongebox Squarepants",30.55,"2025-01-16"),
+("Patrick Starfish",29.55,"2025-01-18"),
+("Sandy Monkey",30.55,"2025-01-15"),
+("Plankton",null,null);
+
+alter table empRecords
+add column jobs varchar(50) after eName;
+
+select * from empRecords;
+
+update  empRecords
+set jobs="Janitor" 
+where eID=6;
+
+
+select * from empRecords where hourlyPay="null";
+
+select * from empRecords where hireDate<"2025-01-18" AND jobs="Cook";
+
+select * from empRecords where jobs="Cook" OR jobs="Janitor";
+
+select * from empRecords where not jobs="Manager";
+
+select * from empRecords where not jobs="Manager" AND not jobs="Janitor";
+
+select * from empRecords where hireDate BETWEEN "2025-01-15" AND "2025-01-18";
+
+select * from empRecords where jobs in('Cook','Manager','Janitor');
+
+-- Wild Cards -> A wildcard character is used to substitute one or more characters in a string. Wildcard characters are used with the LIKE operator. The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
+
+-- To get data whose name starts with 's'
+select * from empRecords where eName like '%ts';
+select * from empRecords where eName like 's%';
+select * from empRecords where eName like 'sp%';
+-- To get data whose job is having '%nag%' pattern
+select* from empRecords where jobs like '%nag%';
+select * from empRecords where hireDate like '2025%';
+-- The _ wildcard represents a single character.
+select * from empRecords where jobs like '_ook';
+
+select * from empRecords where jobs like '__ok';
+select * from empRecords where hireDate like '____-__-18';
+
+
+-- Combining both wildscores
+select * from empRecords where jobs like '_a%';
+
+
+-- order by
+select * from empRecords order by hireDate;
+select * from empRecords order by hireDate desc;
+
+
+select * from transactions order by tAmount desc;
+
+select * from transactions order by tAmount desc ,cID asc;
+
+select * from empRecords limit 1;
+select * from empRecords limit 1,1;
+
+select * from empRecords order by jobs desc limit 1;
