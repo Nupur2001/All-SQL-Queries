@@ -22,3 +22,4 @@ where productName="Headphones";
 
 
 select * from products;
+select productName , unitPrice from products;
