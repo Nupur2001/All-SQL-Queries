@@ -1,0 +1,24 @@
+create database PracticeQuestions1;
+use PracticeQuestions1;
+
+create table products(
+pID int primary key auto_increment,
+productName varchar(50),
+productCategory varchar(50),
+unitPrice decimal(8,2));
+
+alter table products
+auto_increment=101;
+
+insert into products (productName,productCategory,unitPrice)
+values
+("Mouse","Electronics",500),
+("Keyboard","Electronics",500),
+("Headphones","Electronics",500);
+
+update products
+set unitPrice=1000.55
+where productName="Headphones";
+
+
+select * from products;
