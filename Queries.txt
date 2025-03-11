@@ -288,5 +288,68 @@ values
 
 select * from testDefault;
 
+-- PRIMARY KEY -> unique + null. 
+-- can only be used only once
+create table transaction(
+tID int primary key,
+tAmount decimal(5,2)
+);
+
+-- alternative method to add constraint -> Primary Key
+alter table transaction
+add constraint
+primary key(tID);
 
 
+insert into transaction values(1001,5.55);
+
+
+drop table transaction;
+
+
+create table transaction(
+tID int primary key AUTO_INCREMENT,
+tAmount decimal(5,2)
+);
+
+insert into transaction(tAmount) values(5.99);
+select * from transaction;
+
+
+-- Will start from 1000
+alter table transaction
+AUTO_INCREMENT=1000;
+-- Insert Values 
+
+create table customers(
+cID int primary key auto_increment,
+firstName varchar(50),
+lastName varchar(50)
+);
+
+-- drop table customers;
+insert into customers(firstName,lastName)
+values
+("Larry","Fish"),
+("Fred","Lobster"),
+("Bubble","Bass");
+
+select * from customers;
+
+-- drop table transaction;
+
+create table transaction(
+tID int primary key auto_increment,
+amount decimal(5,2),
+cID int,
+foreign key(cID) references customers(cID));
+
+-- Drop foreign key
+-- transaction_ibfk_1 -> Schemas->Choose specific table in which foreign key is added-> foreign key-> copy the code
+alter table transaction
+drop foreign key transaction_ibfk_1;
+
+-- Add unique name to the foreign key
+alter table transaction
+add constraint fk_cutomer_id
+foreign key(cID) references customers(cID);
