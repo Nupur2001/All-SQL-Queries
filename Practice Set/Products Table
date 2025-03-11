@@ -25,4 +25,13 @@ select productName , unitPrice from products;
 select * from products where unitPrice >700;
 select * from products where productCategory="Electronics";
 select pID,productName from products where unitPrice>500;
-select sum(unitPrice) as totalRevenue from products
+
+-- totalRevenue, averageRevenue -> SQL aliases are used to give a table, or a column in a table, a temporary name.Aliases are often used to make column names more readable.An alias only exists for the duration of that query.An alias is created with the AS keyword.
+select sum(unitPrice) as totalRevenue from products;
+select round(avg(unitPrice)) as averageRevenue from products;
+select min(unitPrice) as minRevenue from products;
+select max(unitPrice) as maxRevenue from products;
+-- select first(unitPrice) as lastUnitPriceColumn from products; 
+
+select ucase(productName) from products;
+select mid(productName ,1,4) from products;
