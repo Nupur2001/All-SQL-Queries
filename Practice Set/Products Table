@@ -20,6 +20,9 @@ update products
 set unitPrice=1000.55
 where productName="Headphones";
 
-
 select * from products;
 select productName , unitPrice from products;
+select * from products where unitPrice >700;
+select * from products where productCategory="Electronics";
+select pID,productName from products where unitPrice>500;
+select sum(unitPrice) as totalRevenue from products
