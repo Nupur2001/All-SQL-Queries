@@ -1,0 +1,27 @@
+create database PracticeQuestions1;
+use PracticeQuestions1;
+create table sales(
+pID int primary key auto_increment,
+productName varchar(50),
+quantitySold int,
+saleDate date,
+totalPrice decimal(5,2)
+);
+insert into sales(productName,quantitySold,saleDate,totalPrice)
+values
+("Chocolate",2,"2025-1-15",5.22),
+("Pastry",1,"2025-3-5",7.55),
+("Kinder Joy",4,"2025-3-8",666.5);
+
+alter table sales
+add column total decimal(5,2);
+select * from sales;
+
+alter table sales
+modify total decimal(8,3);
+
+SET SQL_SAFE_UPDATES = 0
+
+update sales 
+set total =quantitySold*totalPrice
+WHERE productName="Kinder Joy";
