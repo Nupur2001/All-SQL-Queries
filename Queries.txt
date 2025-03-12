@@ -456,3 +456,122 @@ select * from empRecords limit 1;
 select * from empRecords limit 1,1;
 
 select * from empRecords order by jobs desc limit 1;
+
+-- UNION -> COMBINES TWO OR MORE SELECT STATEMENTS
+create table employee(
+eID int primary key auto_increment,
+eFirstName varchar(50),
+eLastName varchar(50),
+salary decimal(3,2),
+hireDate date
+);
+
+insert into employee(eFirstName,eLastName,salary,hireDate) 
+values
+("Squidbud","Tentacles",5.22,"2025-01-15"),
+("Spongebox","Squarepants",4.35,"2025-01-17"),
+("Patrick","Strafish",4.5,"2025-01-18");
+
+create table customerVisited(
+cID int primary key auto_increment,
+cFirstName varchar(50),
+cLastName varchar(50),
+productsTried varchar(50)
+);
+
+insert into customerVisited(cFirstName,cLastName,productsTried) 
+values
+("Poppy","Puff","Krabby Patty Burger"),
+("Sandy","Monkey","French Fries"),
+("Boofy","Fish","Krabby Patty Burger,French Fries");
+
+
+insert into customerVisited(cFirstName,cLastName,productsTried) 
+values("Larry","Lobster","Spider Patty Burger");
+select eFirstName,eLastName from employee
+union
+select cFirstName,cLastName from customerVisited;
+
+
+-- SELF JOINS
+alter table customerVisited
+add referalId int;
+select * from customerVisited;
+
+
+update customerVisited
+set referalId=2
+where cID=1;
+
+
+select * from customerVisited as a 
+inner join customers as b
+on a.referalId=b.cID;
+
+select 
+a.cFirstName,a.cLastName,
+b.customerFirstName,b.customerLastName
+from customerVisited as a  
+inner join customers as b 
+on a.referalId=b.cID;
+
+
+select 
+a.cFirstName,a.cLastName,
+concat(b.customerFirstName,b.customerLastName) as referredBy
+from customerVisited as a  
+right join customers as b 
+on a.referalId=b.cID;
+
+select * from  empRecords;
+
+alter table empRecords
+add supervisorID int;
+
+update empRecords
+set supervisorId=1
+where eID=5;
+
+select a.eID,a.eName, 
+concat(b.eName) 
+as "Report To" 
+from empRecords as a 
+left join empRecords as b 
+on a.supervisorId=b.eID;
+
+
+
+create table employeeAtKrustyKrab(
+eId int primary key auto_increment,
+eFirstName varchar(50),
+eLastName varchar(50),
+job varchar(50),
+salary int,
+hireDate date
+);
+
+insert into employeeAtKrustyKrab(eFirstName,eLastName,job,salary,hireDate)
+values
+("Eugene","Krab","Owner",10000,"2025-01-15"),
+("Squidbud","Tentacles","Maneger",7000,"2025-01-16"),
+("Spongebox","Squarepants","Cook",6000,"2025-01-16"),
+("Patrick","Starfish","Cook",6000,"2025-01-18"),
+("Sandy","Monkey","Asst. Manegar",8500,"2025-01-15");
+
+-- Views
+
+create view employeeAttendance 
+as select eFirstName,eLastName 
+from  employeeAtKrustyKrab;
+
+select * from employeeAttendance;
+
+
+-- INDEXES
+create index lastNameAndFirstName on employeeAtKrustyKrab(eLastName,eFirstName);
+show indexes from employeeAtKrustyKrab;
+
+
+select * from employeeAtKrustyKrab  where eLastName="Monkey" And eFirstName="Sandy";
+select * from employeeAtKrustyKrab where eFirstName="Sandy";
+select * from employeeAtKrustyKrab where eLastName="Monkey";
