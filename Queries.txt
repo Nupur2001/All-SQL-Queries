@@ -575,3 +575,22 @@ show indexes from employeeAtKrustyKrab;
 select * from employeeAtKrustyKrab  where eLastName="Monkey" And eFirstName="Sandy";
 select * from employeeAtKrustyKrab where eFirstName="Sandy";
 select * from employeeAtKrustyKrab where eLastName="Monkey";
+
+
+-- SUBQUERIES
+select eFirstName,eLastName,salary,(select avg(salary)
+from employeeAtKrustyKrab) 
+as avgEmpSalaryData 
+from employeeAtKrustyKrab;
+
+select eFirstName,eLastName,salary from employeeAtKrustyKrab
+where salary>(select avg(salary)
+from employeeAtKrustyKrab);
+
+-- To remove duplicates we use DISINCT
+select eID,eName,jobs,hourlyPay,hireDate 
+from empRecords 
+where eID in 
+(select distinct eID 
+from empRecords 
+where hourlyPay is not null);
