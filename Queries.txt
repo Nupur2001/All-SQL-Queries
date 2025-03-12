@@ -594,3 +594,49 @@ where eID in
 (select distinct eID 
 from empRecords 
 where hourlyPay is not null);
+
+/*
+create table customerVisited(
+cID int primary key auto_increment,
+cFirstName varchar(50),
+cLastName varchar(50),
+productsTried varchar(50)
+);
+*/
+alter table customerVisited
+add orderDate date,
+add totalAmount int;
+
+
+select * from customerVisited;
+update customerVisited
+set orderDate="2025-01-17" 
+where cFirstName="Larry";
+
+update customerVisited
+set totalAmount=700
+where cFirstName="Larry";
+
+-- Group By
+select sum(totalAmount),orderDate 
+from customerVisited
+group by orderDate;
+
+
+insert into customerVisited(cFirstName,cLastName,productsTried,orderDate,totalAmount) 
+values
+("Poppy","Puff","Spider Patty Burger","2025-01-19",700),
+("Sandy","Monkey","Krabby Patty Burger","2025-01-18",1000),
+("Bluffy","Bass","Krabby Patty Burger,French Fries,Coldrink","2025-01-19",700),
+("Larry","Lobster","Krabby Patty Burger","2025-01-20",1000);
+
+
+select count(cFirstName),orderDate as customerVisitedCount from customerVisited group by orderDate;
+select count(orderDate) as DOO,cFirstName as customerVisitedNames from customerVisited group by cFirstName;
+select count(orderDate) as DOO,cFirstName as customerVisitedNames from customerVisited group by cFirstName having count(orderDate)>1;
+-- ROLLUP
+select sum(totalAmount), orderDate from customerVisited group by orderDate with rollup;
+select count(productsTried), orderDate, cFirstName from customerVisited group by orderDate,cFirstName with rollup;
+set sql_safe_updates=0
+
+
