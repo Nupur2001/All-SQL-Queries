@@ -1,0 +1,77 @@
+-- Bikini Bottom Database
+create database Bikini_Bottom;
+use Bikini_Bottom;
+
+create table Bikini_Bottom_People(
+PeopleID int primary key auto_increment,
+pFirstName varchar(50),
+pLastName varchar(50),
+PhoneNumber int,
+Address varchar(100)
+);
+
+create table customerVisitedAtKrustyKrab(
+PeopleID int,
+CutomerID int primary key auto_increment,
+CustomerVisitedFirstName varchar(50),
+CustomerVisitedLastName varchar(50),
+CustomerVisitedPhoneNumber int,
+CustomerVisitedAddress varchar(100),
+foreign key (PeopleID) REFERENCES Bikini_Bottom_People(PeopleID)
+);
+
+
+select * from Bikini_Bottom_People;
+select * from customerVisitedAtKrustyKrab;
+
+insert into Bikini_Bottom_People (pFirstName,pLastName,PhoneNumber,Address)
+values
+('Patrick', 'Star', '123456789', '12 Starfish Street, Bikini Bottom'),
+('Sandy', 'Cheeks', '987654321', '9 Acorn Drive, Bikini Bottom'),
+('Sheldon', 'Plankton', '123459876', '413 Conch Street, Bikini Bottom'),
+('Gary', 'The Snail', '987456123', '124 Conch Street, Bikini Bottom'),
+('Pearl', 'Krabs', '981276345', '1 Krusty Krab Lane, Bikini Bottom'),
+('Larry', 'The Lobster', '451237896', ' 6 Beach Blvd, Bikini Bottom'),
+('Mrs. Poppy', 'Puff', '897645231', '59 Puff Lane, Bikini Bottom'),
+('Mermaid', 'Man', '678798452', '777 Shellfish Street, Bikini Bottom'),
+('Barnacle', 'Boy', '129087459', '777 Shellfish Street, Bikini Bottom'),
+('Squilliam', 'Fancyson', '877461325', ' 5000 Fancy Boulevard, Bikini Bottom'),
+('Bubble', 'Bass', '766649852', '42 Slug Lane, Bikini Bottom'),
+('Franky', 'The Fish', '237895885', '21 Fish Circle, Bikini Bottom'),
+('Old Man', 'Walker', '654738291', '50 Walker’s Road, Bikini Bottom'),
+('Flying', 'Dutchman', '655594522', 'The Ghost Ship, Bikini Bottom'),
+('Patchy', 'The Pirate', '112233445', '777 Pirate’s Cove, Bikini Bottom'),
+('Potty', 'The Parrot', '124536798', '777 Pirate’s Cove, Bikini Bottom'),
+('Man', 'Ray', '566822594', '123 Evil Road, Bikini Bottom'),
+('The Alaskan', 'Bull Worm', '123478905', 'The Deep Sea Cave, Bikini Bottom'),
+('King', 'Neptune', '675849392', ' 1 Neptune’s Palace, Bikini Bottom'),
+('Doddle', 'Bob', '102938475', '8 Sketch Street, Bikini Bottom'),
+('Tom', 'News Anchor', '987654321', '111 Media Lane, Bikini Bottom'),
+('Fred', 'the “My leg!” guy', '647328196', '33 Leg Street, Bikini Bottom'),
+('Tsunami', 'Fish', '920135784', '5 Coral Crescent, Bikini Bottom'),
+('Goo Lagoon', 'Lifeguard', '920149392', ' 1 Neptune’s Palace, Bikini Bottom'),
+('Bubble', 'Buddy', '920153878', '4 Bubble Street, Bikini Bottom');
+
+
+
+insert into customerVisitedAtKrustyKrab (CustomerVisitedFirstName,CustomerVisitedLastName,CustomerVisitedPhoneNumber,CustomerVisitedAddress)
+values
+('Tom', 'News Anchor', '987654321', '111 Media Lane, Bikini Bottom'),
+('Fred', 'the “My leg!” guy', '647328196', '33 Leg Street, Bikini Bottom'),
+('Tsunami', 'Fish', '920135784', '5 Coral Crescent, Bikini Bottom'),
+('Goo Lagoon', 'Lifeguard', '920149392', ' 1 Neptune’s Palace, Bikini Bottom'),
+('Bubble', 'Buddy', '920153878', '4 Bubble Street, Bikini Bottom'),
+('Patrick', 'Star', '123456789', '12 Starfish Street, Bikini Bottom'),
+('Barnacle', 'Boy', '129087459', '777 Shellfish Street, Bikini Bottom'),
+('Patchy', 'The Pirate', '112233445', '777 Pirate’s Cove, Bikini Bottom'),
+('Bubble', 'Bass', '766649852', '42 Slug Lane, Bikini Bottom'),
+('Larry', 'The Lobster', '451237896', ' 6 Beach Blvd, Bikini Bottom'),
+('Squilliam', 'Fancyson', '877461325', ' 5000 Fancy Boulevard, Bikini Bottom'),
+('Old Man', 'Walker', '654738291', '50 Walker’s Road, Bikini Bottom'),
+('Franky', 'The Fish', '237895885', '21 Fish Circle, Bikini Bottom');
+
+
+
+select customerVisitedAtKrustyKrab.CutomerID,Bikini_Bottom_People.PeopleID, Bikini_Bottom_People.pFirstName,Bikini_Bottom_People.pLastName from Bikini_Bottom_People 
+right join customerVisitedAtKrustyKrab on
+customerVisitedAtKrustyKrab.CutomerID  =  Bikini_Bottom_People.PeopleID;
