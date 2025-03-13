@@ -19,6 +19,8 @@ CustomerVisitedPhoneNumber int,
 CustomerVisitedAddress varchar(100),
 foreign key (PeopleID) REFERENCES Bikini_Bottom_People(PeopleID)
 );
+alter table customerVisitedAtKrustyKrab
+rename column CutomerID to CustomerID;
 
 
 select * from Bikini_Bottom_People;
@@ -56,30 +58,109 @@ values
 
 insert into customerVisitedAtKrustyKrab (CustomerVisitedFirstName,CustomerVisitedLastName,CustomerVisitedPhoneNumber,CustomerVisitedAddress)
 values
-('Tom', 'News Anchor', '987654321', '111 Media Lane, Bikini Bottom'),
-('Fred', 'the “My leg!” guy', '647328196', '33 Leg Street, Bikini Bottom'),
 ('Tsunami', 'Fish', '920135784', '5 Coral Crescent, Bikini Bottom'),
 ('Goo Lagoon', 'Lifeguard', '920149392', ' 1 Neptune’s Palace, Bikini Bottom'),
-('Bubble', 'Buddy', '920153878', '4 Bubble Street, Bikini Bottom'),
 ('Patrick', 'Star', '123456789', '12 Starfish Street, Bikini Bottom'),
-('Barnacle', 'Boy', '129087459', '777 Shellfish Street, Bikini Bottom'),
-('Patchy', 'The Pirate', '112233445', '777 Pirate’s Cove, Bikini Bottom'),
-('Bubble', 'Bass', '766649852', '42 Slug Lane, Bikini Bottom'),
-('Larry', 'The Lobster', '451237896', ' 6 Beach Blvd, Bikini Bottom'),
-('Squilliam', 'Fancyson', '877461325', ' 5000 Fancy Boulevard, Bikini Bottom'),
-('Old Man', 'Walker', '654738291', '50 Walker’s Road, Bikini Bottom'),
-('Franky', 'The Fish', '237895885', '21 Fish Circle, Bikini Bottom');
+('Larry', 'The Lobster', '451237896', ' 6 Beach Blvd, Bikini Bottom');
 
 
 
-select customerVisitedAtKrustyKrab.CutomerID,Bikini_Bottom_People.PeopleID, Bikini_Bottom_People.pFirstName,Bikini_Bottom_People.pLastName from Bikini_Bottom_People 
+
+-- Write a query to find customers from the customerVisitedAtKrustyKrab table who live on "Leg Street."
+select * from customerVisitedAtKrustyKrab where CustomerVisitedAddress="33 Leg Street, Bikini Bottom";
+
+-- Write a query to find customers from the customerVisitedAtKrustyKrab table whose PhoneNumber starts with 9201.
+select * from customerVisitedAtKrustyKrab where CustomerVisitedPhoneNumber like '9201%';
+
+-- Write a query to find the record of "Patrick Star" from both the Bikini_Bottom_People and customerVisitedAtKrustyKrab tables.
+select * from customerVisitedAtKrustyKrab where CustomerVisitedFirstName="Patrick";
+
+-- Write a query to find customers who share the same address in the Bikini_Bottom_People table.
+select *from Bikini_Bottom_People where Address="Conch Street, Bikini Bottom";
+
+
+-- Have to work on this question
+
+/*
+List customers who live on a street that contains the word "Beach":
+Write a query to find all customers in customerVisitedAtKrustyKrab whose address contains "Beach" (e.g., "6 Beach Blvd").
+
+Updating and Modifying Data
+Update the address for a specific customer:
+
+Write a query to update the address of "Patrick Star" in the Bikini_Bottom_People table.
+Change the phone number for a customer who visited Krusty Krab:
+
+Write a query to update the phone number for a customer in the customerVisitedAtKrustyKrab table, e.g., "Larry The Lobster."
+Delete a customer from customerVisitedAtKrustyKrab table:
+
+Write a query to delete a customer from the customerVisitedAtKrustyKrab table by CustomerID (e.g., "Fred, the 'My Leg!' guy").
+Advanced SQL Queries
+Find the customers who have visited Krusty Krab more than once:
+
+Write a query to find all customers who visited the Krusty Krab more than once (based on CustomerVisitedFirstName and CustomerVisitedLastName).
+Find customers who visited the Krusty Krab and have the same first name:
+
+Write a query to find all customers who share the same first name from the customerVisitedAtKrustyKrab table.
+List customers who are from specific addresses:
+
+Write a query to select customers who live at either "777 Shellfish Street" or "12 Starfish Street."
+Find customers with matching first and last names:
+
+Write a query to find all records in customerVisitedAtKrustyKrab where CustomerVisitedFirstName is the same as CustomerVisitedLastName.
+List customers who live on a street that contains the word "Beach":
+
+Write a query to find all customers in customerVisitedAtKrustyKrab whose address contains "Beach" (e.g., "6 Beach Blvd").
+Deleting Data
+Delete a customer from both tables:
+
+Write a query to delete a customer from both Bikini_Bottom_People and customerVisitedAtKrustyKrab (e.g., "Patrick Star") by PeopleID.
+Delete all customers who visited from a specific address:
+
+Write a query to delete all records in customerVisitedAtKrustyKrab where the CustomerVisitedAddress is '777 Shellfish Street.'
+Remove all customers who have a specific phone number from the Krusty Krab visits table:
+
+Write a query to remove all customers with the phone number '987654321' from the customerVisitedAtKrustyKrab table.
+
+*/
+
+
+
+
+select 
+customerVisitedAtKrustyKrab.CustomerID,
+Bikini_Bottom_People.PeopleID,
+Bikini_Bottom_People.pFirstName,
+Bikini_Bottom_People.pLastName,
+customerVisitedAtKrustyKrab.CustomerVisitedFirstName,
+customerVisitedAtKrustyKrab.CustomerVisitedLastName,
+customerVisitedAtKrustyKrab.CustomerVisitedPhoneNumber,
+customerVisitedAtKrustyKrab.CustomerVisitedAddress
+from Bikini_Bottom_People
 inner join customerVisitedAtKrustyKrab on
-customerVisitedAtKrustyKrab.CutomerID  =  Bikini_Bottom_People.PeopleID;
+customerVisitedAtKrustyKrab.PeopleID = Bikini_Bottom_People.PeopleID;
 
-select customerVisitedAtKrustyKrab.CutomerID,Bikini_Bottom_People.PeopleID, Bikini_Bottom_People.pFirstName,Bikini_Bottom_People.pLastName from Bikini_Bottom_People 
+select
+customerVisitedAtKrustyKrab.CustomerID,
+Bikini_Bottom_People.PeopleID,
+Bikini_Bottom_People.pFirstName,
+Bikini_Bottom_People.pLastName,
+customerVisitedAtKrustyKrab.CustomerVisitedFirstName,
+customerVisitedAtKrustyKrab.CustomerVisitedLastName,
+customerVisitedAtKrustyKrab.CustomerVisitedPhoneNumber,
+customerVisitedAtKrustyKrab.CustomerVisitedAddress from Bikini_Bottom_People 
 left join customerVisitedAtKrustyKrab on
-customerVisitedAtKrustyKrab.CutomerID  =  Bikini_Bottom_People.PeopleID;
+customerVisitedAtKrustyKrab.PeopleID  =  Bikini_Bottom_People.PeopleID;
 
-select customerVisitedAtKrustyKrab.CutomerID,Bikini_Bottom_People.PeopleID, Bikini_Bottom_People.pFirstName,Bikini_Bottom_People.pLastName from Bikini_Bottom_People 
+select
+customerVisitedAtKrustyKrab.CustomerID,
+Bikini_Bottom_People.PeopleID,
+Bikini_Bottom_People.pFirstName,
+Bikini_Bottom_People.pLastName,
+customerVisitedAtKrustyKrab.CustomerVisitedFirstName,
+customerVisitedAtKrustyKrab.CustomerVisitedLastName,
+customerVisitedAtKrustyKrab.CustomerVisitedPhoneNumber,
+customerVisitedAtKrustyKrab.CustomerVisitedAddress
+from Bikini_Bottom_People 
 right join customerVisitedAtKrustyKrab on
-customerVisitedAtKrustyKrab.CutomerID  =  Bikini_Bottom_People.PeopleID;
+customerVisitedAtKrustyKrab.PeopleID  =  Bikini_Bottom_People.PeopleID;
