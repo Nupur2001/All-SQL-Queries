@@ -73,5 +73,13 @@ values
 
 
 select customerVisitedAtKrustyKrab.CutomerID,Bikini_Bottom_People.PeopleID, Bikini_Bottom_People.pFirstName,Bikini_Bottom_People.pLastName from Bikini_Bottom_People 
+inner join customerVisitedAtKrustyKrab on
+customerVisitedAtKrustyKrab.CutomerID  =  Bikini_Bottom_People.PeopleID;
+
+select customerVisitedAtKrustyKrab.CutomerID,Bikini_Bottom_People.PeopleID, Bikini_Bottom_People.pFirstName,Bikini_Bottom_People.pLastName from Bikini_Bottom_People 
+left join customerVisitedAtKrustyKrab on
+customerVisitedAtKrustyKrab.CutomerID  =  Bikini_Bottom_People.PeopleID;
+
+select customerVisitedAtKrustyKrab.CutomerID,Bikini_Bottom_People.PeopleID, Bikini_Bottom_People.pFirstName,Bikini_Bottom_People.pLastName from Bikini_Bottom_People 
 right join customerVisitedAtKrustyKrab on
 customerVisitedAtKrustyKrab.CutomerID  =  Bikini_Bottom_People.PeopleID;
