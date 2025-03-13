@@ -1,0 +1,86 @@
+-- Student Table
+set SQL_SAFE_UPDATES=0;
+create database school;
+use school;
+create table studentMarks(
+studentID int primary key auto_increment,
+firstName varchar(50),
+lastName varchar(50),
+gpa decimal(3,2),
+enrollmentDate datetime,
+major varchar(50)
+);
+
+alter table studentMarks
+auto_increment=201;
+
+insert into studentMarks(firstName,lastName,gpa,enrollmentDate,major)
+values 
+("Shivansh","Mahajan",8.90,"2021-09-01 09:30","Computer Science"),
+("Umesh","Sharma",8.44,"2021-09-01 08:30","Maths"),
+("Rakesh","Kumar",5.6,"2021-09-01 10:00","Biology"),
+("Radha","Sharma",9.2,"2021-09-01 12:45","Chemitry"),
+("Kush","Kumar",7.85,"2021-09-01 08:30","Physics"),
+("Prem","Chopra",9.56,"2021-09-01 09:24","History"),
+("Pankaj","Vats",9.78,"2021-09-01 02:30","English"),
+("Navleen","Kaur",7,"2021-09-01 06:30","Maths");
+
+select * from studentMarks;
+update studentMarks 
+set major="Chemistry"
+where firstName="Radha";
+
+create table programTable(
+studentRefID int primary key auto_increment,
+programName varchar(50),
+programStartDate datetime
+);
+alter table programTable
+auto_increment=201;
+
+-- drop table programTable;
+truncate table programTable;
+select * from programTable;
+insert into programTable(programName,programStartDate)
+values
+("Computer Science","2021-09-01 00:00:00"),
+("Maths","2021-09-01 00:00:00"),
+("Maths","2021-09-01 00:00:00"),
+("Physics","2021-09-01 00:00:00"),
+("Chemitry","2021-09-01 00:00:00"),
+("Psycology","2021-09-01 00:00:00"),
+("History","2021-09-01 00:00:00"),
+("Biology","2021-09-01 00:00:00");
+
+
+create table scholorships(
+studentRefID int primary key auto_increment,
+scholorshipAmount int,
+scholorshipDate datetime
+);
+alter table scholorships 
+auto_increment=201;
+
+insert into scholorships(scholorshipAmount,scholorshipDate)
+values
+(5000,"2021-10-15 00:00:00"),
+(4500,"2022-08-18 00:00:00"),
+(3000,"2022-01-25 00:00:00"),
+(4000,"2021-10-15 00:00:00");
+
+select * from scholorships;
+
+
+-- Questions
+select ucase(firstName) from studentMarks;
+select mid(firstName,1,3) from studentMarks;
+select instr(firstName,'a') from studentMarks where firstName="Shivansh";
+select replace(firstName,'a','A') from studentMarks;
+select concat(firstName,lastName) as fullName from studentMarks;
+select * from studentMarks order by firstName, major desc;
+select * from studentMarks where firstName in ("Shivansh","Prem");
+select * from studentMarks where firstName not in("Shivansh","Prem");
+select * from studentMarks where firstName like '%a';
+select * from studentMarks where firstName like '____a';
+select * from studentMarks where gpa between 9.00 AND 9.99;
+select count(*) from studentMarks as countStudents where major="Computer Science";
