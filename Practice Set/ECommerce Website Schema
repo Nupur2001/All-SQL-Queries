@@ -1,0 +1,21 @@
+create database eCommerceWebsite;
+use eCommerceWebsite;
+create table customers(
+customerID int primary key auto_increment,
+customerName varchar(50),
+customerEmail varchar(100),
+AccountCreatedAt datetime
+);
+insert into customers(customerName,customerEmail,AccountCreatedAt)
+values
+("John Doe"," johndoe@example.com",now()),
+("Jane Smith","janesmith@example.com",now()),
+("Robert Brown","robertbrown@example.com",now()),
+("Emily Davis","emilydavis@example.com",now()),
+("Michael Johnson","michaeljohnson@example.com",now());
+
+
+select * from customers;
+insert into customers(customerName,customerEmail,AccountCreatedAt)
+value
+("Sophia Taylor","sophiataylor@example.com",now());
