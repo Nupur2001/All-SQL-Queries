@@ -35,3 +35,16 @@ value
 ("Chicken Maggi",1600.55,150);
 
 select * from products;
+
+
+create table categories(
+categoryID int primary key auto_increment,
+categoryName varchar(50)
+);
+
+insert into categories(categoryName)
+value
+("Fast Food");
+
+
+select * from categories;
