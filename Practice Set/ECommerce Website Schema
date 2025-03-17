@@ -94,7 +94,7 @@ foreign key (productID) references products(productID) on delete cascade
 
 insert into OrderItems(quantity,totalPrice)
 value
-(1,500);
+(2,500);
 
 select * from OrderItems;
 select * from products;
