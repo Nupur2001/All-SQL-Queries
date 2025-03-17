@@ -36,6 +36,15 @@ value
 
 select * from products;
 
+alter table products 
+add column productCategories varchar(50);
+
+
+update products
+set productCategories="Fast Food"
+where productName="Chicken Maggi";
+
+
 
 create table categories(
 categoryID int primary key auto_increment,
@@ -69,8 +78,3 @@ value
 
 select * from orders;
 select * from customers;
-
-
-
-
-
