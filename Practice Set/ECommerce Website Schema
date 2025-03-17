@@ -48,3 +48,29 @@ value
 
 
 select * from categories;
+
+
+create table orders(
+customerID int,
+orderID int primary key auto_increment,
+customerName varchar(50),
+orderedProduct varchar(50),
+orderDate datetime,
+orderStatus varchar(50),
+foreign key (customerID) references customers(customerID)
+);
+
+
+insert into orders(customerName,orderedProduct,orderDate,orderStatus)
+value
+("Emily Darwis","AHA BHA based Face Wash","2025-03-18 13:50:23","Placed");
+
+-- delete from orders where orderID=1; 
+
+select * from orders;
+select * from customers;
+
+
+
+
+
