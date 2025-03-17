@@ -43,6 +43,8 @@ on employees(empFirstName,empLastName);
 -- select * from employees
 -- with (index(empName));
 
+select * from employees;
+
 select * from employees
 where empFirstName="Patrick";
 
@@ -55,3 +57,35 @@ from employees;
 
 select * from employeeAttendance;
 select * from employeeAttendance order by empLastName desc;
+
+
+-- check constraint
+alter table employees
+add constraint checkHourlyPay check(hourlyPay>=15);
+
+insert into employees(empFirstName,empLastName,job,hourlyPay)
+values("Sheldon","Plankton","Janitor",NULL);
+
+
+-- Subqueries
+select empFirstName,empLastName,hourlyPay,
+(select avg(hourlyPay) from employees)
+ as avgHourlyPay 
+ from employees;
+
+select empFirstName,empLastName,hourlyPay
+from employees
+where hourlyPay>(select avg(hourlypay) from employees);
+
+select sum(salary),job
+from employees
+group by job;
+
+select avg(salary),job
+from employees
+group by job;
+
+select avg(salary),job
+from employees
+group by job
+having avg(salary)>47000;
