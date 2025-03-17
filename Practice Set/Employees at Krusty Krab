@@ -89,3 +89,16 @@ select avg(salary),job
 from employees
 group by job
 having avg(salary)>47000;
+
+-- Wild Cards
+select * from employees where 
+empFirstName like '%on';
+
+select * from employees where 
+empFirstName like 's%';
+
+select * from employees where 
+empFirstName like '____don';
+
+select * from employees where 
+empFirstName like 'shel___';
