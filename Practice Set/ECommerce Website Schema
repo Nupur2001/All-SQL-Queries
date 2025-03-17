@@ -19,3 +19,19 @@ select * from customers;
 insert into customers(customerName,customerEmail,AccountCreatedAt)
 value
 ("Sophia Taylor","sophiataylor@example.com",now());
+
+create table products(
+productID int primary key auto_increment,
+productName varchar(50),
+price decimal(7,2),
+stockQuantity int
+);
+
+alter table products
+auto_increment=200;
+
+insert into products(productName,price,stockQuantity)
+value
+("Chicken Maggi",1600.55,150);
+
+select * from products;
