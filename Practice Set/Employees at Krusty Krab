@@ -1,0 +1,57 @@
+set sql_safe_updates=0;
+create database employeesAtKrustyKrab;
+use employeesAtKrustyKrab;
+create table employees(
+empID int primary key auto_increment,
+empFirstName varchar(50),
+empLastName varchar(50),
+job varchar(50),
+hourlyPay decimal(3,2)
+);
+alter table employees 
+modify column hourlyPay decimal(5,2);
+ 
+insert into employees(empFirstName,empLastName,job,hourlyPay)
+values
+("Eugene","Krabs","Owner",25.50),
+("Monkey","Cheeks","Asst. Manager",22.25),
+("Squidward","Tentacles","Manager",20.25),
+("Spongebox","Squarepants","Cook",19.25),
+("Patrick","Starfish","Cook",19.25);
+
+alter table employees
+add column salary decimal(10,2) after hourlyPay;
+
+update employees
+set salary=hourlyPay*2080;
+
+create trigger beforeHourlyPayUpdate 
+before update on employees
+for each row
+set new.salary=(new.hourlyPay*2080);
+
+update employees
+set hourlyPay=50
+where empID=1;
+
+show triggers;
+
+create index empName
+on employees(empFirstName,empLastName);
+
+-- Select table with index
+-- select * from employees
+-- with (index(empName));
+
+select * from employees
+where empFirstName="Patrick";
+
+select * from employees
+where empID=4;
+
+create view employeeAttendance
+as select empFirstName,empLastName
+from employees;
+
+select * from employeeAttendance;
+select * from employeeAttendance order by empLastName desc;
