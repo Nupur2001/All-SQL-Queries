@@ -1,103 +1,101 @@
-create database eCommerceWebsite;
-use eCommerceWebsite;
-create table customers(
-customerID int primary key auto_increment,
-customerName varchar(50),
-customerEmail varchar(100),
-AccountCreatedAt datetime
+set sql_safe_updates=0;
+create database ECommerce;
+use ECommerce;
+
+CREATE TABLE customers (
+    customerID INT PRIMARY KEY AUTO_INCREMENT,
+    customerName VARCHAR(50) NOT NULL,
+    customerEmail VARCHAR(100) UNIQUE NOT NULL,
+    customerPhoneNo VARCHAR(20) NOT NULL,
+    customerAddress VARCHAR(100) NOT NULL,
+    customerAccountCreatedAt DATETIME NOT NULL
 );
-insert into customers(customerName,customerEmail,AccountCreatedAt)
-values
-("John Doe"," johndoe@example.com",now()),
-("Jane Smith","janesmith@example.com",now()),
-("Robert Brown","robertbrown@example.com",now()),
-("Emily Davis","emilydavis@example.com",now()),
-("Michael Johnson","michaeljohnson@example.com",now());
 
-update customers
-set customerEmail="johndoe@example.com"
-where customerName="John Doe";
-
-select * from customers;
-insert into customers(customerName,customerEmail,AccountCreatedAt)
+insert into customers(customerName,customerEmail,customerPhoneNo,customerAddress,customerAccountCreatedAt)
 value
-("Sophia Taylor","sophiataylor@example.com",now());
+("Sudha Murthy","sudhaMurthy@example.com","7088766446","Infosys Street",now());
 
-create table products(
-productID int primary key auto_increment,
-productName varchar(50),
-price decimal(7,2),
-stockQuantity int
+CREATE TABLE products (
+    productID INT PRIMARY KEY AUTO_INCREMENT,
+    productName VARCHAR(50) NOT NULL,
+    productPrice DECIMAL(10 , 2 ) NOT NULL,
+    productStockQuantity INT NOT NULL
 );
 
-alter table products
-auto_increment=200;
-
-insert into products(productName,price,stockQuantity)
+insert into products(productName,productPrice,productStockQuantity)
 value
-("Chicken Maggi",1600.55,150);
+("Iphone16",4000.35,1);
 
-
-
-alter table products 
-add column productCategories varchar(50);
-
-
-update products
-set productCategories="Fast Food"
-where productName="Chicken Maggi";
-
-
-
-create table categories(
-categoryID int primary key auto_increment,
-categoryName varchar(50)
+CREATE TABLE categories (
+    categoryID INT PRIMARY KEY AUTO_INCREMENT,
+    categoryName VARCHAR(50) NOT NULL
 );
+
 
 insert into categories(categoryName)
 value
-("Fast Food");
+("Electronics");
 
-
-select * from categories;
-
-
-create table orders(
-orderID int primary key auto_increment,
-customerID int,
-orderDate datetime,
-orderStatus varchar(50),
-foreign key (customerID) references customers(customerID)
+CREATE TABLE orders (
+    orderID INT PRIMARY KEY AUTO_INCREMENT,
+    customerID INT,
+    orderDate DATETIME NOT NULL,
+    orderStatus ENUM('Pending', 'Delivered', 'Placed') NOT NULL,
+    totalAmount DECIMAL(10 , 2 ) NOT NULL,
+    FOREIGN KEY (customerID)
+        REFERENCES customers (customerID)
 );
 
-
-insert into orders(orderDate,orderStatus)
+insert into orders(customerID,orderDate,orderStatus,totalAmount)
 value
-("2025-03-19 12:09:44","Placed");
+(3,now(),"Delivered",4000.35);
 
--- delete from orders where orderID=1; 
-
-select * from orders;
-select * from customers;
-
-
-create table OrderItems(
-ItemsOrderedID int primary key auto_increment,
-orderID int,
-productID int,
-quantity int,
-totalPrice decimal(10,2),
-foreign key (orderID) references orders(orderID) on delete cascade,
-foreign key (productID) references products(productID) on delete cascade
+CREATE TABLE orderItems (
+    orderItemsID INT PRIMARY KEY AUTO_INCREMENT,
+    orderID INT,
+    productID INT,
+    orderItemQuantity INT NOT NULL,
+    unitPrice DECIMAL(10 , 2 ),
+    FOREIGN KEY (orderID)
+        REFERENCES orders (orderID),
+    FOREIGN KEY (productID)
+        REFERENCES products (productID)
 );
 
+alter table orderItems
+add column totalAmount decimal(10,2);
 
-insert into OrderItems(quantity,totalPrice)
+UPDATE orderItems 
+SET 
+    totalAmount = unitPrice * orderItemQuantity
+WHERE
+    orderItemsID = 2;
+
+CREATE 
+    TRIGGER  totalAmountUpdate
+ BEFORE UPDATE ON orderItems FOR EACH ROW 
+    SET new . totalAmount = (new.unitPrice * new.orderItemQuantity);
+
+insert into orderItems(orderID,productID,orderItemQuantity,unitPrice)
 value
-(2,500);
+(3,3,2,3200.35);
 
-select * from OrderItems;
-select * from products;
+CREATE TABLE productCategories (
+    productID INT,
+    categoryID INT,
+    FOREIGN KEY (productID)
+        REFERENCES products (productID),
+    FOREIGN KEY (categoryID)
+        REFERENCES categories (categoryID)
+);
 
+insert into productCategories(productID,categoryID)
+value
+(2,1);
 
-
+SELECT *FROM customers;
+SELECT * FROM products;
+SELECT * FROM categories;
+SELECT * FROM orders;
+SELECT * FROM orderItems;
+SELECT * FROM productCategories;
