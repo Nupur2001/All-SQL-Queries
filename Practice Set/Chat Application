@@ -24,3 +24,23 @@ userNotification enum('mute','unmute') default 'unmute' not null,
 foreign key (chatID) references chats(chatID),
 foreign key (userID) references chats(userID)
 );
+
+create table messages(
+messageID int primary key auto_increment,
+chatID int,
+senderID int,
+receiverID int,
+foreign key (chatID) references chats(chatID)
+);
+
+
+
+
+
+
+
+
+
+
+
+
