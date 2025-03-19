@@ -1,0 +1,26 @@
+create database chatApp;
+use chatApp;
+create table users(
+userID int primary key auto_increment,
+userFullName varchar(50) not null,
+userName varchar(50) not null,
+userPhoneNo varchar(20) not null,
+userEmail varchar(100) not null,
+userProfilePic longblob not null,
+userAccountCreatedAt datetime not null,
+userNotification enum('mute','unmute') default 'unmute' not null
+); 
+
+create table chats(
+chatID int primary key auto_increment,
+chatType enum('Group','Individual') not null,
+chatCreatedAt datetime not null
+);
+
+create table chatMemberTables(
+userID int,
+chatID int,
+userNotification enum('mute','unmute') default 'unmute' not null,
+foreign key (chatID) references chats(chatID),
+foreign key (userID) references chats(userID)
+);
