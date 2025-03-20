@@ -1,15 +1,27 @@
 create database chatApp;
 use chatApp;
+
+-- SHOW TABLES;
+-- SELECT FOUND_ROWS();
+
 create table users(
 userID int primary key auto_increment,
 userFullName varchar(50) not null,
 userName varchar(50) not null,
 userPhoneNo varchar(20) not null,
 userEmail varchar(100) not null,
-userProfilePic longblob not null,
+userProfilePic varchar(255) not null,
 userAccountCreatedAt datetime not null,
 userNotification enum('mute','unmute') default 'unmute' not null
 ); 
+
+insert into users(userFullName,userName,userPhoneNo,userEmail,userProfilePic,userAccountCreatedAt,userNotification)
+values
+("Kylie Martinez","KylieM","78790874436","kylieM@example.com","https://www.dummylink.com/task1",now(),"unmute"),
+("Alexander Sloan","Alex","97874780466","alexSloan@example.com","https://www.dummylink.com/task2","2025-03-18 12:32:43","mute"),
+("Selene Osborne","SeleneSlay","6546622887","seleneOsborne@example.com","https://www.dummylink.com/task3",now(),"mute"),
+("Augustus Solis","Aggy","79870855736","aggy@example.com","https://www.dummylink.com/task4",now(),"unmute"),
+("Miracle Bradshaw","MiracleInYourLife","6578182596","miracleB@example.com","https://www.dummylink.com/task5","2024-09-15 13:45:34","unmute");
 
 create table chats(
 chatID int primary key auto_increment,
@@ -17,30 +29,64 @@ chatType enum('Group','Individual') not null,
 chatCreatedAt datetime not null
 );
 
+insert into chats(chatType,chatCreatedAt)
+value
+("Individual","2025-02-01 9:06:23"),
+("Group",now()),
+("Individual",now()),
+("Group","2025-02-01 9:06:23"),
+("Individual","2025-07-12 6:06:29");
+
 create table chatMemberTables(
 userID int,
 chatID int,
-userNotification enum('mute','unmute') default 'unmute' not null,
+isMuted bool default false not null,
 foreign key (chatID) references chats(chatID),
-foreign key (userID) references chats(userID)
+foreign key (userID) references users(userID)
 );
 
 create table messages(
 messageID int primary key auto_increment,
 chatID int,
 senderID int,
-receiverID int,
+parentMessageID int,
+messagesCreatedAt datetime not null default current_timestamp,
+messageBody varchar(255) not null,
+messagesDeletedAt datetime  null,
 foreign key (chatID) references chats(chatID)
 );
 
+create table groupChats(
+groupID int primary key auto_increment,
+groupCreatedAt datetime not null default current_timestamp,
+groupName varchar(50),
+groupAdmin int,
+chatID int,
+foreign key (groupAdmin) references users(userID),
+foreign key (chatID) references chats(chatID)
+);
+
+create table permission(
+userRole varchar(50) default "Moderator",
+capibilities enum("AddingUser","RemovingUser","MsgEditing","SendingMedia")
+);
+
+create table readReceipts(
+messageReadAt datetime not null default current_timestamp,
+userID int,
+messageID int,
+foreign key (userID) references users(userID),
+foreign key (messageID) references messages(messageID)
+);
+
+create table reactions(
+reactions enum("Thumbsup","ThumbsDown","Happy","Excited","Sad","Crying","Angry","Ewww"),
+userID int,
+messageID int,
+foreign key (userID) references users(userID),
+foreign key (messageID) references messages(messageID)
+);
 
 
-
-
-
-
-
-
-
-
-
+select * from users;
+select * from chats;
