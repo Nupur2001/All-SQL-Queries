@@ -188,7 +188,7 @@ from orderItems inner join products
 on orderItems.productID=products.productID
 group by orderItemsID having count(orderItemQuantity) order by max(orderItemQuantity) desc;
 
--- Display categories along with the total number of products in each category.  (Getting Error)
-select products.productID,categories.categoryID,categories.categoryName,products.productName,count(productCategories.productID) as totalProducts
+-- Display categories along with the total number of products in each category.
+select categories.categoryID,categories.categoryName,count(productCategories.productID) as totalProducts
 from products inner join productCategories on productCategories.productID=products.productID
 inner join categories on productCategories.categoryID = categories.categoryID group by categories.categoryName,categories.categoryID;
