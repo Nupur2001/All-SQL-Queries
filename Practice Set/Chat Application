@@ -187,12 +187,15 @@ left join reactions on reactions.userID=users.userID
 order by messages.messagesCreatedAt
 limit 50;
 
--- Fetch all unread messages for a user in group chats where the user is a member. **
-select messages.messageID,messages.senderID,messages.messageBody,readReceipts.recieverID,users.userFullName
+-- Fetch all unread messages for a user in group chats where the user is a member.
+select distinct messages.messageID,messages.senderID,messages.messageBody,users.userFullName
 from messages
 join chatMemberTables on chatMemberTables.userID=messages.senderID
 join readReceipts on chatMemberTables.userID=readReceipts.recieverID
-join users on readReceipts.recieverID=users.userID;
+join users on readReceipts.recieverID=users.userID
+where users.userID=1
+and messages.messageID 
+not in (select readReceipts.messageID from readReceipts where readReceipts.recieverID=users.userID);
 
 -- Get a list of group members in a specific group, showing their role and online/offline status.
 select chatMemberTables.chatID,chatMemberTables.userID,users.userFullName,users.userStatus,permission.userRole
@@ -234,9 +237,3 @@ where messages.messageBody like "%completed%"
 group by messages.messageID;
 
 -- List all group chats where the user is an admin and has added at least 5 new members in the last 30 days.
-
-
-
-
-
-
