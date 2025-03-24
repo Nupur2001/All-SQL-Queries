@@ -220,7 +220,22 @@ join groupChats on chatMemberTables.chatID=groupChats.chatID
 join users on users.userID=chatMemberTables.userID
 where groupChats.groupName="Hello Framds";
 
+-- Retrieve a user’s last read message in each of their chats.
+select distinct messages.messageID, messages.messageBody 
+from readReceipts
+join messages on readReceipts.messageID=messages.messageID
+where readReceipts.messageID=3;
+
+select * from readReceipts;
 -- Fetch all messages in a chat containing a specific keyword, sorted by the number of reactions.
+select distinct messages.messageID,messages.messageBody,count(reactions.reactions) as numberOfReactions
+from messages join reactions on messages.messageID=reactions.messageID
+where messages.messageBody like "%completed%"
+group by messages.messageID;
+
+-- List all group chats where the user is an admin and has added at least 5 new members in the last 30 days.
+
+
 
 
 
