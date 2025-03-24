@@ -95,13 +95,15 @@ add foreign key (senderID) references users(userID);
 
 insert into messages(chatID,senderID,parentMessageID,messagesCreatedAt,messageBody)
 values
-(4,1,null,now(),"Just make the best things"),
-(4,2,null,"2025-03-18 10:12:56","Everything begins with an idea"),
-(4,3,null,"2025-03-20 13:00:00","Think outside box");
+(4,1,null,now(),"Media"),
+(4,2,null,"2025-03-17 10:12:56","Media"),
+(4,3,null,"2025-03-15 13:00:00","Media");
 
 update messages
 set parentMessageID=5
 where chatID=3;
+
+select * from messages;
 
 create table groupChats(
 groupID int primary key auto_increment,
@@ -144,7 +146,7 @@ foreign key (messageID) references messages(messageID)
 
 insert into readReceipts(messageReadAt,recieverID,messageID)
 value
-("2025-03-20 13:02:32",3,3);
+(now(),1,2);
 
 
 create table reactions(
@@ -185,6 +187,13 @@ left join reactions on reactions.userID=users.userID
 order by messages.messagesCreatedAt
 limit 50;
 
+-- Fetch all unread messages for a user in group chats where the user is a member. **
+select messages.messageID,messages.senderID,messages.messageBody,readReceipts.recieverID,users.userFullName
+from messages
+join chatMemberTables on chatMemberTables.userID=messages.senderID
+join readReceipts on chatMemberTables.userID=readReceipts.recieverID
+join users on readReceipts.recieverID=users.userID;
+
 -- Get a list of group members in a specific group, showing their role and online/offline status.
 select chatMemberTables.chatID,chatMemberTables.userID,users.userFullName,users.userStatus,permission.userRole
 from chatMemberTables
@@ -198,5 +207,21 @@ select messages.messageID,messages.messageBody,count(reactions.reactions) as tot
 from messages 
 join reactions on messages.messageID=reactions.messageID
 group by messages.messageID, messages.messageBody;
+
+-- Fetch the total number of media messages sent in a specific group chat over the last 7 days.
+select messages.messagesCreatedAt, messages.messageBody from 
+messages where 
+ DATE(messagesCreatedAt)>=Date(now())-interval 7 day and messages.messageBody like "%Media";
+
+-- Find all users who have muted a specific group chat.
+select users.userFullName,chatMemberTables.isUnMuted
+from chatMemberTables
+join groupChats on chatMemberTables.chatID=groupChats.chatID
+join users on users.userID=chatMemberTables.userID
+where groupChats.groupName="Hello Framds";
+
+-- Fetch all messages in a chat containing a specific keyword, sorted by the number of reactions.
+
+
 
 
