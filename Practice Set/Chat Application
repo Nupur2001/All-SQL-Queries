@@ -258,3 +258,6 @@ and chatMemberTables.addedBy=1
 and date(chatMemberTables.memberAddedDateAndTime)>=date(now())-interval 30 day
 group by groupChats.groupID, groupChats.groupAdmin
 having newMembers<=5;
+
+
+
