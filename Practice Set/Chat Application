@@ -63,13 +63,26 @@ foreign key (chatID) references chats(chatID),
 foreign key (userID) references users(userID)
 );
 
-insert into chatMemberTables(userID,chatID,isUnMuted)
+insert into chatMemberTables(userID,chatID,isUnMuted,addedBy,memberAddedDateAndTime)
 values
-(1,4,true),
-(2,4,false),
-(3,4,false),
-(5,4,true),
-(4,4,true);
+(2,4,false,1,"2025-01-15 6:06:29"),
+(3,4,false,1,"2025-01-10 9:06:23"),
+(5,4,true,1,"2025-02-1 9:06:23"),
+(4,4,true,1,"2025-02-28 9:06:23");
+
+update chatMemberTables
+set memberAddedDateAndTime="2025-01-15 6:06:29"
+where userID=2 and chatID=4;
+
+
+
+select * from chatMemberTables;
+alter table chatMemberTables
+add column addedBy int,
+add column memberAddedDateAndTime datetime;
+
+alter table chatMemberTables
+add foreign key (addedBy) references users(userID);
 
 create table messages(
 messageID int primary key auto_increment,
@@ -132,8 +145,8 @@ foreign key (groupID) references groupChats(groupID)
 
 insert into permission (groupAdmin,groupID,capibilities)
 values
-(4,1,"AddingUser"),
-(5,2,"RemovingUser");
+(1,4,"AddingUser"),
+(1,4,"AddingUser");
 
 
 create table readReceipts(
@@ -229,7 +242,6 @@ from readReceipts
 join messages on readReceipts.messageID=messages.messageID
 where readReceipts.messageID=3;
 
-select * from readReceipts;
 -- Fetch all messages in a chat containing a specific keyword, sorted by the number of reactions.
 select distinct messages.messageID,messages.messageBody,count(reactions.reactions) as numberOfReactions
 from messages join reactions on messages.messageID=reactions.messageID
@@ -237,3 +249,12 @@ where messages.messageBody like "%completed%"
 group by messages.messageID;
 
 -- List all group chats where the user is an admin and has added at least 5 new members in the last 30 days.
+select groupChats.chatID,groupChats.groupID, groupChats.groupAdmin,count(chatMemberTables.addedBy) as newMembers
+from groupChats
+join chatMemberTables
+on groupChats.chatID=chatMemberTables.chatID
+where groupChats.groupAdmin=1
+and chatMemberTables.addedBy=1
+and date(chatMemberTables.memberAddedDateAndTime)>=date(now())-interval 30 day
+group by groupChats.groupID, groupChats.groupAdmin
+having newMembers<=5;
