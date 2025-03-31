@@ -1,0 +1,29 @@
+create database company;
+use company;
+
+show tables;
+
+create table employee(
+eID int primary key auto_increment,
+eFirstName varchar(50),
+eLastName varchar(50),
+eSalary int
+);
+
+insert into employee(eFirstName,eLastName,eSalary)
+values
+("Hadlee","Boyd",42000),
+("Everly","Rogers",22000),
+("Dennis","Cox",36000),
+("Kate","Odom",42000),
+("Ada","Carter",22000),
+("Madeleine","Fox",36000);
+
+
+set autocommit=OFF;
+commit;
+select * from employee;
+
+
+delete from employee;
+rollback;
