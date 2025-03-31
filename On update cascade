@@ -1,0 +1,47 @@
+create database company;
+use company;
+
+show tables;
+
+create table employee(
+eID int primary key auto_increment,
+eFirstName varchar(50),
+eLastName varchar(50),
+eSalary int
+);
+
+insert into employee(eFirstName,eLastName,eSalary)
+values
+("Hadlee","Boyd",42000),
+("Everly","Rogers",22000),
+("Dennis","Cox",36000),
+("Kate","Odom",42000),
+("Ada","Carter",22000),
+("Madeleine","Fox",36000);
+
+create table department(
+depID int primary key auto_increment,
+depName varchar(50),
+eID int,
+foreign key (eID) references employee(eID) on update cascade
+);
+
+insert into department(depName,eID)
+values
+("IT",1),
+("HR",2),
+("BA",3),
+("IT",4),
+("HR",5),
+("Finance",6);
+
+update employee
+set eID=7
+where eFirstName="Landon";
+set sql_safe_updates=0;
+
+select * from employee;
+select * from department;
+
+drop table employee;
+drop table department;
