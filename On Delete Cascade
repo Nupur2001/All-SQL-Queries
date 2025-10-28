@@ -1,4 +1,4 @@
-
+-- When a parent record is deleted, all related child records are automatically deleted as well. This ensures that no orphaned records exist in the child table. 
 
 create database company;
 use company;
