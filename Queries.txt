@@ -1,4 +1,4 @@
--- Creating Database employees
+
 CREATE DATABASE employees;
 
 -- Use this database to perform the database operations.
