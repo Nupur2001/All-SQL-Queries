@@ -17,3 +17,4 @@ The CITY table is described as follows:
     3. Type your code immediately after comment. Don't leave any blank line.
 */
 
+SELECT * FROM CITY WHERE COUNTRYCODE='JPN';
