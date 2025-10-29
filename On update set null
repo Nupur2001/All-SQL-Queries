@@ -1,11 +1,10 @@
 # 🏢 Company Database — SQL Project
 
-This SQL script creates a simple **Company Database** containing two tables:  
-`employee` and `department`. It demonstrates table creation, insertion, updating, and use of **foreign keys**.
+A simple SQL project that demonstrates **database creation**, **table relationships**, **data manipulation**, and **foreign key constraints** using MySQL.
 
 ---
 
-## ⚙️ Database Setup
+## ⚙️ Complete SQL Script
 
 ```sql
 -- Create a new database
@@ -16,3 +15,68 @@ USE company;
 
 -- View available tables
 SHOW TABLES;
+
+-- ==========================
+-- 👨‍💼 EMPLOYEE TABLE
+-- ==========================
+
+CREATE TABLE employee(
+    eID INT PRIMARY KEY AUTO_INCREMENT,
+    eFirstName VARCHAR(50),
+    eLastName VARCHAR(50),
+    eSalary INT
+);
+
+-- Insert data into employee table
+INSERT INTO employee(eFirstName, eLastName, eSalary)
+VALUES
+    ("Hadlee", "Boyd", 42000),
+    ("Everly", "Rogers", 22000),
+    ("Dennis", "Cox", 36000),
+    ("Kate", "Odom", 42000),
+    ("Ada", "Carter", 22000),
+    ("Madeleine", "Fox", 36000);
+
+-- ==========================
+-- 🏬 DEPARTMENT TABLE
+-- ==========================
+
+CREATE TABLE department(
+    depID INT PRIMARY KEY AUTO_INCREMENT,
+    depName VARCHAR(50),
+    eID INT,
+    FOREIGN KEY (eID) REFERENCES employee(eID)
+        ON UPDATE SET NULL
+);
+
+-- Insert data into department table
+INSERT INTO department(depName, eID)
+VALUES
+    ("IT", 1),
+    ("HR", 2),
+    ("BA", 3),
+    ("IT", 4),
+    ("HR", 5),
+    ("Finance", 6);
+
+-- ==========================
+-- 🔄 UPDATE OPERATIONS
+-- ==========================
+
+-- Disable safe update mode (optional)
+SET sql_safe_updates = 0;
+
+-- Update employee ID for a specific record
+UPDATE employee
+SET eID = 7
+WHERE eFirstName = "Hadlee";
+
+-- ==========================
+-- 📋 VIEW DATA
+-- ==========================
+
+-- View all employee records
+SELECT * FROM employee;
+
+-- View all department records
+SELECT * FROM department;
